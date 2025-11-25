@@ -3,7 +3,7 @@ using Godot;
 
 namespace Karaoke.Game.Engine;
 
-public static class EngineUtilss
+public static class EngineUtils
 {
     public static void IterateThroughAllChildrenRecursive(this Node root, Action<Node> action)
     {

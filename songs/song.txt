@@ -1,0 +1,6 @@
+>>t=3
+<ts=4 te=7>Lorem ipsum dolor sit amet, <ts=7 te=12>consectetur adipiscing elit
+<ts=15 te=20>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+
+>>t=23
+<ts=25 te=28>Ut enim ad minim veniam

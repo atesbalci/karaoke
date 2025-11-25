@@ -11,10 +11,19 @@ config_version=5
 [application]
 
 config/name="Karaoke"
-run/main_scene="res://scenes/song.tscn"
+run/main_scene="uid://b28c4hy45dhcl"
 config/features=PackedStringArray("4.5", "C#")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1600
+window/size/viewport_height=900
 
 [dotnet]
 
 project/assembly_name="Karaoke"
+
+[editor]
+
+export/convert_text_resources_to_binary=false

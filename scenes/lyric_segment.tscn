@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1im0jmoxhgli"]
+
+[ext_resource type="Material" uid="uid://dtixs4e62l5py" path="res://materials/lyrics.tres" id="1_pchxk"]
+[ext_resource type="Theme" uid="uid://d0p2ftjbcavew" path="res://themes/lyrics.tres" id="2_8fb8w"]
+
+[node name="LyricSegment" type="Label"]
+material = ExtResource("1_pchxk")
+custom_minimum_size = Vector2(0, 75)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -525.0
+offset_top = -150.0
+offset_right = -364.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_8fb8w")
+text = "ddsfsdf"

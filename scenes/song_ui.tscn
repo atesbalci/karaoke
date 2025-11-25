@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4sj6f81xtwnw"]
+
+[ext_resource type="Script" uid="uid://db7niqelt6a8a" path="res://scripts/Game/Engine/Song/SongRunnerNode.cs" id="1_dijmr"]
+[ext_resource type="PackedScene" uid="uid://b1im0jmoxhgli" path="res://scenes/lyric_segment.tscn" id="2_pub24"]
+
+[node name="SongUI" type="Control" node_paths=PackedStringArray("_lineContainers")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dijmr")
+_segmentScene = ExtResource("2_pub24")
+_lineContainers = [NodePath("Lines/Line1"), NodePath("Lines/Line2")]
+_testSongResource = "res://songs/song.txt"
+
+[node name="Lines" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -670.0
+offset_top = -150.0
+offset_right = 670.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Line1" type="HBoxContainer" parent="Lines"]
+layout_mode = 2
+alignment = 1
+
+[node name="Line2" type="HBoxContainer" parent="Lines"]
+layout_mode = 2
+alignment = 1
