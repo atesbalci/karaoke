@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dtixs4e62l5py"]
+
+[ext_resource type="Shader" uid="uid://bvj617246x1di" path="res://shaders/lyrics.tres" id="1_cxqqq"]
+
+[resource]
+shader = ExtResource("1_cxqqq")
+shader_parameter/ProgressColor = Color(1, 1, 0, 1)
+shader_parameter/Progress = 112.714005353915
