@@ -34,9 +34,13 @@ public partial class SongRunnerController : Node, IInjectable, ISongRunner
         _groupIndex = 0;
     }
 
+    public bool IsPaused { get; set; }
+    public float TimeScale { get; set; } = 1f;
+
     public override void _Process(double delta)
     {
-        Time += (float) delta;
+        if (IsPaused) return;
+        Time += (float) delta * TimeScale;
         
         if (_groupIndex < _lyrics.Groups.Count)
         {

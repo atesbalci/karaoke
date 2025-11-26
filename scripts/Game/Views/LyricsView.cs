@@ -10,15 +10,30 @@ namespace Karaoke.Game.Views;
 public partial class LyricsView : Node, IInjectable
 {
     [Export] private PackedScene _segmentScene;
-    [Export] private Node[] _lineContainers;
     
     private readonly IDictionary<LyricsSegment, LyricsSegmentView> _activeSegments = new Dictionary<LyricsSegment, LyricsSegmentView>();
     
     private ISongRunner _songRunner;
+    private Node _linesParent;
 
     public void InjectDependencies(IServiceProvider serviceProvider)
     {
         _songRunner = serviceProvider.GetRequiredService<ISongRunner>();
+        
+        // Initialize Subnodes
+        _linesParent = GetNode("Lines");
+        GetNode<Button>("Pause").Toggled += OnPauseToggled;
+        GetNode<Button>("FastForward").Toggled += OnFastForwardToggled;
+    }
+
+    private void OnFastForwardToggled(bool toggledOn)
+    {
+        _songRunner.TimeScale = toggledOn ? 4f : 1f;
+    }
+
+    private void OnPauseToggled(bool toggledOn)
+    {
+        _songRunner.IsPaused = toggledOn;
     }
 
     public void NewLyrics(LyricsGroup group)
@@ -31,7 +46,7 @@ public partial class LyricsView : Node, IInjectable
             {
                 var segmentNode = _segmentScene.Instantiate<LyricsSegmentView>();
                 segmentNode.Initialize(segment);
-                _lineContainers[i].AddChild(segmentNode);
+                _linesParent.GetChild(i).AddChild(segmentNode);
                 _activeSegments[segment] = segmentNode;
             }
         }
@@ -49,7 +64,7 @@ public partial class LyricsView : Node, IInjectable
 
     private void ClearLines()
     {
-        foreach (var lineContainer in _lineContainers)
+        foreach (var lineContainer in _linesParent.GetChildren())
         {
             foreach (var child in lineContainer.GetChildren())
             {
