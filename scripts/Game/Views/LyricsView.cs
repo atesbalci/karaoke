@@ -30,7 +30,7 @@ public partial class LyricsView : Node, IInjectable
             foreach (var segment in group.Lines[i].Segments)
             {
                 var segmentNode = _segmentScene.Instantiate<LyricsSegmentView>();
-                segmentNode.Initialize(segment.Text);
+                segmentNode.Initialize(segment);
                 _lineContainers[i].AddChild(segmentNode);
                 _activeSegments[segment] = segmentNode;
             }

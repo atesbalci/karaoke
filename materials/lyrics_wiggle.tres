@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://fenmtsi2iqin"]
+
+[ext_resource type="Shader" uid="uid://bu4rgogh57h4v" path="res://shaders/lyrics_wiggle.tres" id="1_sny55"]
+
+[resource]
+shader = ExtResource("1_sny55")
+shader_parameter/ProgressColor = Color(1, 1, 0, 1)
+shader_parameter/Progress = 60.54000287565

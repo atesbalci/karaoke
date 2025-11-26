@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dr8khoaoo3ads"]
+
+[ext_resource type="Shader" uid="uid://ddpcfwme6eywi" path="res://shaders/lyrics_texture_scroll.tres" id="1_wgqow"]
+[ext_resource type="Texture2D" uid="uid://b2jhxhlqct5ro" path="res://textures/spectrum.jpg" id="2_tu1dd"]
+
+[resource]
+shader = ExtResource("1_wgqow")
+shader_parameter/Texture = ExtResource("2_tu1dd")
+shader_parameter/ProgressColor = Color(1, 1, 0, 1)
+shader_parameter/Progress = 86.6270041147825

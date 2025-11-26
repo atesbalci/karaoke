@@ -1,20 +1,37 @@
+using System;
 using Godot;
+using Karaoke.Game.Models;
 
 namespace Karaoke.Game.Views;
 
 public partial class LyricsSegmentView : Label
 {
-    private ShaderMaterial _material;
+    [Export] private ShaderMaterial _regularMaterial;
+    [Export] private ShaderMaterial _wiggleMaterial;
+    [Export] private ShaderMaterial _colorWaveMaterial;
     
-    public override void _Ready()
-    {
-        _material = (ShaderMaterial) Material.Duplicate();
-        Material = _material;
-    }
+    private ShaderMaterial _material;
 
-    public void Initialize(string text)
+    public void Initialize(LyricsSegment segment)
     {
-        Text = text;
+        Text = segment.Text;
+
+        ShaderMaterial mat;
+        switch (segment.Style)
+        {
+            case LyricsStyle.Wiggle:
+                mat = _wiggleMaterial;
+                break;
+            case LyricsStyle.ColorWave:
+                mat = _colorWaveMaterial;
+                break;
+            default:
+                mat = _regularMaterial;
+                break;
+        }
+        
+        _material = (ShaderMaterial) mat.Duplicate();
+        Material = _material;
     }
 
     public void UpdateProgress(float progressNormalized)

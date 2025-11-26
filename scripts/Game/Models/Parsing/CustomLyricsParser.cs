@@ -31,7 +31,8 @@ public class CustomLyricsParser : ILyricsParser
                     var start = parameters.GetParameter<float>("ts");
                     var end = parameters.GetParameter<float>("te");
                     var text = match.Groups[2].Value;
-                    line.Segments.Add(new LyricsSegment(start, end, text));
+                    var style = parameters.GetParameter<LyricsStyle>("style");
+                    line.Segments.Add(new LyricsSegment(start, end, text, style));
                 }
             }
         }
@@ -61,13 +62,18 @@ public class CustomLyricsParser : ILyricsParser
 
         public T GetParameter<T>(string key)
         {
+            if (!_parameters.TryGetValue(key, out var value))
+            {
+                return default;
+            }
+            
             var type = typeof(T);
             if (type.IsEnum)
             {
-                return (T)Enum.Parse(type, _parameters[key]);
+                return (T)Enum.Parse(type, value);
             }
 
-            return (T)Convert.ChangeType(_parameters[key], type, CultureInfo.InvariantCulture);
+            return (T)Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
         }
     }
 }
