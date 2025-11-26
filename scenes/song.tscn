@@ -1,16 +1,38 @@
-[gd_scene load_steps=4 format=3 uid="uid://b28c4hy45dhcl"]
+[gd_scene load_steps=6 format=3 uid="uid://b28c4hy45dhcl"]
 
 [ext_resource type="Script" uid="uid://dukdlqojrs5fv" path="res://scripts/Game/DI/SongInstaller.cs" id="1_pslvi"]
 [ext_resource type="Script" uid="uid://db7niqelt6a8a" path="res://scripts/Game/Controllers/SongRunnerController.cs" id="2_57y0v"]
 [ext_resource type="PackedScene" uid="uid://c4sj6f81xtwnw" path="res://scenes/song_ui.tscn" id="2_x6vk3"]
+[ext_resource type="Theme" uid="uid://d0p2ftjbcavew" path="res://themes/lyrics.tres" id="4_adosm"]
+[ext_resource type="Script" uid="uid://bnlk84h60yq2x" path="res://scripts/Game/Views/LyricsNextTimerView.cs" id="5_vovin"]
 
 [node name="Song" type="Node" node_paths=PackedStringArray("_songRunnerController")]
 script = ExtResource("1_pslvi")
 _songRunnerController = NodePath("SongRunner")
 
-[node name="SongRunner" type="Node" parent="." node_paths=PackedStringArray("_lyricsView")]
+[node name="SongRunner" type="Node" parent="." node_paths=PackedStringArray("_lyricsView", "_lyricsNextTimerView")]
 script = ExtResource("2_57y0v")
 _lyricsView = NodePath("SongUI")
+_lyricsNextTimerView = NodePath("Countdown")
 _testSongResource = "res://songs/song.txt"
 
 [node name="SongUI" parent="SongRunner" instance=ExtResource("2_x6vk3")]
+
+[node name="Countdown" type="Label" parent="SongRunner"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -68.5
+offset_right = 50.0
+offset_bottom = 68.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(50, 68.5)
+theme = ExtResource("4_adosm")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_vovin")
