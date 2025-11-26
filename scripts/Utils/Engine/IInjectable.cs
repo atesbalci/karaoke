@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Karaoke.Game.Engine;
+namespace Karaoke.Utils.Engine;
 
 public interface IInjectable
 {

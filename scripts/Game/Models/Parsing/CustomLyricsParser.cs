@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Karaoke.Game.Models.Parsing;
@@ -16,20 +18,20 @@ public class CustomLyricsParser : ILyricsParser
             if (string.IsNullOrEmpty(lineRaw)) continue;
             if (lineRaw.StartsWith(">>"))
             {
-                var time = float.Parse(ParseParameters(lineRaw.Substring(2))["t"]);
-                lyrics.Groups.Add(new Group(time));
+                var time = ParseParameters(lineRaw.Substring(2)).GetParameter<float>("t");
+                lyrics.Groups.Add(new LyricsGroup(time));
             }
             else
             {
-                var line = new Line();
+                var line = new LyricsLine();
                 lyrics.Groups[^1].Lines.Add(line);
                 foreach (Match match in LineRegex.Matches(lineRaw))
                 {
                     var parameters = ParseParameters(match.Groups[1].Value);
-                    var start = float.Parse(parameters["ts"]);
-                    var end = float.Parse(parameters["te"]);
+                    var start = parameters.GetParameter<float>("ts");
+                    var end = parameters.GetParameter<float>("te");
                     var text = match.Groups[2].Value;
-                    line.Segments.Add(new Segment(start, end, text));
+                    line.Segments.Add(new LyricsSegment(start, end, text));
                 }
             }
         }
@@ -37,14 +39,35 @@ public class CustomLyricsParser : ILyricsParser
         return lyrics;
     }
 
-    private IDictionary<string, string> ParseParameters(string parametersRaw)
+    private Parameters ParseParameters(string parametersRaw)
     {
-        var retVal = new Dictionary<string, string>();
+        var retVal = new Parameters();
         foreach (Match match in ParameterRegex.Matches(parametersRaw))
         {
-            retVal[match.Groups[1].Value] = match.Groups[2].Value;
+            retVal.SetParameter(match.Groups[1].Value, match.Groups[2].Value);
         }
         
         return retVal;
+    }
+
+    private class Parameters
+    {
+        private readonly IDictionary<string, string> _parameters = new Dictionary<string, string>();
+
+        public void SetParameter(string key, string val)
+        {
+            _parameters[key] = val;
+        }
+
+        public T GetParameter<T>(string key)
+        {
+            var type = typeof(T);
+            if (type.IsEnum)
+            {
+                return (T)Enum.Parse(type, _parameters[key]);
+            }
+
+            return (T)Convert.ChangeType(_parameters[key], type, CultureInfo.InvariantCulture);
+        }
     }
 }

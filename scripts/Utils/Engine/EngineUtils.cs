@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace Karaoke.Game.Engine;
+namespace Karaoke.Utils.Engine;
 
 public static class EngineUtils
 {

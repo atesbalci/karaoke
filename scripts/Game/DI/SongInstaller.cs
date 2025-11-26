@@ -1,13 +1,16 @@
 ﻿using System;
 using Godot;
-using Karaoke.Game.Engine;
+using Karaoke.Game.Controllers;
+using Karaoke.Game.Models;
 using Karaoke.Game.Models.Parsing;
+using Karaoke.Utils.Engine;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Karaoke.Game.DI;
 
 public partial class SongInstaller : Node
 {
+    [Export] private SongRunnerController _songRunnerController;
     private IServiceProvider _services;
     
     public override void _Ready()
@@ -21,6 +24,7 @@ public partial class SongInstaller : Node
     {
         _services = new ServiceCollection()
             .AddSingleton<ILyricsParser, CustomLyricsParser>()
+            .AddSingleton<ISongRunner>(_songRunnerController)
             .BuildServiceProvider();
     }
 

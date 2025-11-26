@@ -4,32 +4,32 @@ namespace Karaoke.Game.Models;
 
 public class Lyrics
 {
-    public IList<Group> Groups { get; } = new List<Group>();
+    public IList<LyricsGroup> Groups { get; } = new List<LyricsGroup>();
 }
 
-public class Group
+public class LyricsGroup
 {
     public float Time { get; }
-    public IList<Line> Lines { get; } =  new List<Line>();
+    public IList<LyricsLine> Lines { get; } =  new List<LyricsLine>();
 
-    public Group(float time)
+    public LyricsGroup(float time)
     {
         Time = time;
     }
 }
 
-public class Line
+public class LyricsLine
 {
-    public IList<Segment> Segments { get; } = new List<Segment>();
+    public IList<LyricsSegment> Segments { get; } = new List<LyricsSegment>();
 }
 
-public class Segment
+public class LyricsSegment
 {
     public float StartTime { get; }
     public float EndTime { get; }
     public string Text { get; }
 
-    public Segment(float startTime, float endTime, string text)
+    public LyricsSegment(float startTime, float endTime, string text)
     {
         StartTime = startTime;
         EndTime = endTime;

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1im0jmoxhgli"]
+[gd_scene load_steps=4 format=3 uid="uid://b1im0jmoxhgli"]
 
 [ext_resource type="Material" uid="uid://dtixs4e62l5py" path="res://materials/lyrics.tres" id="1_pchxk"]
 [ext_resource type="Theme" uid="uid://d0p2ftjbcavew" path="res://themes/lyrics.tres" id="2_8fb8w"]
+[ext_resource type="Script" uid="uid://c8dbowugggp1f" path="res://scripts/Game/Views/LyricsSegmentView.cs" id="3_8fb8w"]
 
 [node name="LyricSegment" type="Label"]
 material = ExtResource("1_pchxk")
@@ -18,3 +19,4 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_8fb8w")
 text = "ddsfsdf"
+script = ExtResource("3_8fb8w")

@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://b28c4hy45dhcl"]
+[gd_scene load_steps=4 format=3 uid="uid://b28c4hy45dhcl"]
 
 [ext_resource type="Script" uid="uid://dukdlqojrs5fv" path="res://scripts/Game/DI/SongInstaller.cs" id="1_pslvi"]
+[ext_resource type="Script" uid="uid://db7niqelt6a8a" path="res://scripts/Game/Controllers/SongRunnerController.cs" id="2_57y0v"]
 [ext_resource type="PackedScene" uid="uid://c4sj6f81xtwnw" path="res://scenes/song_ui.tscn" id="2_x6vk3"]
 
-[node name="Song" type="Node"]
+[node name="Song" type="Node" node_paths=PackedStringArray("_songRunnerController")]
 script = ExtResource("1_pslvi")
+_songRunnerController = NodePath("SongRunner")
 
-[node name="SongUI" parent="." instance=ExtResource("2_x6vk3")]
+[node name="SongRunner" type="Node" parent="." node_paths=PackedStringArray("_lyricsView")]
+script = ExtResource("2_57y0v")
+_lyricsView = NodePath("SongUI")
+_testSongResource = "res://songs/song.txt"
+
+[node name="SongUI" parent="SongRunner" instance=ExtResource("2_x6vk3")]
