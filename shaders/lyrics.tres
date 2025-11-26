@@ -1,4 +1,9 @@
-[gd_resource type="VisualShader" load_steps=9 format=3 uid="uid://bvj617246x1di"]
+[gd_resource type="VisualShader" load_steps=10 format=3 uid="uid://bvj617246x1di"]
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_x2jdi"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(0, 0, 0, 0)]
+op_type = 2
+operator = 2
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_x2jdi"]
 parameter_name = "ProgressColor"
@@ -59,6 +64,10 @@ void fragment() {
 	vec4 n_out2p0 = ProgressColor;
 
 
+// VectorOp:10
+	vec4 n_out10p0 = n_out2p0 * n_out8p0;
+
+
 // VaryingGetter:9
 	float n_out9p0 = var_vertex_x;
 
@@ -72,7 +81,7 @@ void fragment() {
 
 
 // Mix:4
-	vec4 n_out4p0 = mix(n_out8p0, n_out2p0, n_out7p0);
+	vec4 n_out4p0 = mix(n_out8p0, n_out10p0, n_out7p0);
 
 
 // Output:0
@@ -91,7 +100,7 @@ nodes/vertex/3/node = SubResource("VisualShaderNodeVaryingSetter_bg0lb")
 nodes/vertex/3/position = Vector2(-200, 260)
 nodes/vertex/connections = PackedInt32Array(2, 0, 3, 0)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_x2jdi")
-nodes/fragment/2/position = Vector2(-400, 80)
+nodes/fragment/2/position = Vector2(-480, 80)
 nodes/fragment/3/node = SubResource("VisualShaderNodeFloatParameter_bg0lb")
 nodes/fragment/3/position = Vector2(-480, 540)
 nodes/fragment/4/node = SubResource("VisualShaderNodeMix_8tyf8")
@@ -99,7 +108,9 @@ nodes/fragment/4/position = Vector2(130.22069, 151.65002)
 nodes/fragment/7/node = SubResource("VisualShaderNodeStep_bg0lb")
 nodes/fragment/7/position = Vector2(-60, 500)
 nodes/fragment/8/node = SubResource("VisualShaderNodeInput_bg0lb")
-nodes/fragment/8/position = Vector2(-300, -40)
+nodes/fragment/8/position = Vector2(-460, -40)
 nodes/fragment/9/node = SubResource("VisualShaderNodeVaryingGetter_x2jdi")
 nodes/fragment/9/position = Vector2(-462.91016, 368.38376)
-nodes/fragment/connections = PackedInt32Array(2, 0, 4, 1, 4, 0, 0, 0, 8, 0, 4, 0, 3, 0, 7, 1, 9, 0, 7, 0, 7, 0, 4, 2)
+nodes/fragment/10/node = SubResource("VisualShaderNodeVectorOp_x2jdi")
+nodes/fragment/10/position = Vector2(-120, 160)
+nodes/fragment/connections = PackedInt32Array(4, 0, 0, 0, 8, 0, 4, 0, 3, 0, 7, 1, 9, 0, 7, 0, 7, 0, 4, 2, 2, 0, 10, 0, 10, 0, 4, 1, 8, 0, 10, 1)

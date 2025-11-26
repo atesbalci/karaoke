@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=14 format=3 uid="uid://ddpcfwme6eywi"]
+[gd_resource type="VisualShader" load_steps=16 format=3 uid="uid://ddpcfwme6eywi"]
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_h0u7s"]
 source = 5
@@ -19,6 +19,14 @@ default_input_values = [0, 0.0, 1, -1.0]
 operator = 2
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_0qhx1"]
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_anlh6"]
+default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(0, 0, 0, 0)]
+op_type = 2
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_ls34d"]
+input_name = "color"
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_x2jdi"]
 parameter_name = "ProgressColor"
@@ -69,6 +77,10 @@ void vertex() {
 }
 
 void fragment() {
+// Input:18
+	vec4 n_out18p0 = COLOR;
+
+
 // Input:14
 	float n_out14p0 = TIME;
 
@@ -112,8 +124,12 @@ void fragment() {
 	vec4 n_out4p0 = mix(n_out11p0, n_out2p0, n_out7p0);
 
 
+// VectorOp:17
+	vec4 n_out17p0 = n_out18p0 * n_out4p0;
+
+
 // Output:0
-	COLOR.rgb = vec3(n_out4p0.xyz);
+	COLOR.rgb = vec3(n_out17p0.xyz);
 
 
 }
@@ -127,6 +143,7 @@ nodes/vertex/2/position = Vector2(-600, 260)
 nodes/vertex/3/node = SubResource("VisualShaderNodeVaryingSetter_bg0lb")
 nodes/vertex/3/position = Vector2(-200, 260)
 nodes/vertex/connections = PackedInt32Array(2, 0, 3, 0)
+nodes/fragment/0/position = Vector2(700, 160)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_x2jdi")
 nodes/fragment/2/position = Vector2(-400, 80)
 nodes/fragment/3/node = SubResource("VisualShaderNodeFloatParameter_bg0lb")
@@ -149,4 +166,8 @@ nodes/fragment/15/node = SubResource("VisualShaderNodeFloatOp_x2og7")
 nodes/fragment/15/position = Vector2(-320, -400)
 nodes/fragment/16/node = SubResource("VisualShaderNodeFloatOp_0qhx1")
 nodes/fragment/16/position = Vector2(-120, -280)
-nodes/fragment/connections = PackedInt32Array(2, 0, 4, 1, 4, 0, 0, 0, 3, 0, 7, 1, 9, 0, 7, 0, 7, 0, 4, 2, 11, 0, 4, 0, 12, 0, 11, 2, 9, 0, 13, 1, 14, 0, 15, 0, 15, 0, 16, 0, 13, 0, 16, 1, 16, 0, 11, 0)
+nodes/fragment/17/node = SubResource("VisualShaderNodeVectorOp_anlh6")
+nodes/fragment/17/position = Vector2(480, -40)
+nodes/fragment/18/node = SubResource("VisualShaderNodeInput_ls34d")
+nodes/fragment/18/position = Vector2(120, 40)
+nodes/fragment/connections = PackedInt32Array(3, 0, 7, 1, 9, 0, 7, 0, 7, 0, 4, 2, 11, 0, 4, 0, 12, 0, 11, 2, 9, 0, 13, 1, 14, 0, 15, 0, 15, 0, 16, 0, 13, 0, 16, 1, 16, 0, 11, 0, 2, 0, 4, 1, 4, 0, 17, 1, 18, 0, 17, 0, 17, 0, 0, 0)

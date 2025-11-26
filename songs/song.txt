@@ -2,5 +2,7 @@
 <ts=4 te=7>Lorem ipsum dolor sit amet, <ts=7 te=12 style=Wiggle>consectetur adipiscing elit
 <ts=15 te=20 style=ColorWave>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
 
->>t=23
+>>t=22
+
+>>t=25
 <ts=25 te=28>Ut enim ad minim veniam

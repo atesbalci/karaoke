@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://dr8khoaoo3ads" path="res://materials/lyrics_colorwave.tres" id="5_f6xsf"]
 
 [node name="LyricSegment" type="Label"]
+material = ExtResource("3_68fls")
 custom_minimum_size = Vector2(0, 75)
 anchors_preset = 7
 anchor_left = 0.5
@@ -19,6 +20,7 @@ offset_right = -364.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("2_8fb8w")
+theme_override_constants/outline_size = 6
 text = "ddsfsdf"
 script = ExtResource("3_8fb8w")
 _regularMaterial = ExtResource("3_68fls")
