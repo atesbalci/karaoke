@@ -1,0 +1,3 @@
+## AI Prompts
+* `I'm working on a karaoke app prototype using Godot. Can you draft me a shader for some cool visualization effects for the background? There won't be any audio on this stage of development` <br> 
+The result of this prompt was used to generate the background visual effect of this prototype. But I do need to disclaim that the generated code performs quite a lot of calculations per fragment (pixel), so it definitely needs to be simplified/optimized for a final product. For the purposes of this MVP, I left it as is.

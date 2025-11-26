@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ccv4wuk42n0xd"]
+
+[ext_resource type="Shader" uid="uid://degtwkj63wi0u" path="res://shaders/background.gdshader" id="1_a76fm"]
+
+[resource]
+shader = ExtResource("1_a76fm")
+shader_parameter/time_scale = 1.0
+shader_parameter/wave_speed = 0.5
+shader_parameter/wave_intensity = 0.3
+shader_parameter/color1 = Color(0.8, 0.2, 0.9, 1)
+shader_parameter/color2 = Color(0.2, 0.6, 1, 1)
+shader_parameter/color3 = Color(1, 0.3, 0.5, 1)

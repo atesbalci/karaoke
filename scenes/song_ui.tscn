@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4sj6f81xtwnw"]
+[gd_scene load_steps=6 format=3 uid="uid://c4sj6f81xtwnw"]
 
 [ext_resource type="Script" uid="uid://7wvgvbx8lewy" path="res://scripts/Game/Views/LyricsView.cs" id="1_js1lp"]
 [ext_resource type="PackedScene" uid="uid://b1im0jmoxhgli" path="res://scenes/lyric_segment.tscn" id="2_pub24"]
 [ext_resource type="Script" uid="uid://dngt0gdhhm1wg" path="res://scripts/Game/Views/SongTimeView.cs" id="3_dijmr"]
+[ext_resource type="Material" uid="uid://ccv4wuk42n0xd" path="res://materials/background.tres" id="4_pub24"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_pub24"]
 
 [node name="SongUI" type="Control" node_paths=PackedStringArray("_lineContainers")]
 layout_mode = 3
@@ -14,6 +17,16 @@ grow_vertical = 2
 script = ExtResource("1_js1lp")
 _segmentScene = ExtResource("2_pub24")
 _lineContainers = [NodePath("Lines/Line1"), NodePath("Lines/Line2")]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = ExtResource("4_pub24")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_pub24")
 
 [node name="Lines" type="VBoxContainer" parent="."]
 layout_mode = 1
