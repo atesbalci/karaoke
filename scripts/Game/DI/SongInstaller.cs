@@ -3,42 +3,27 @@ using Godot;
 using Karaoke.Game.Controllers;
 using Karaoke.Game.Models;
 using Karaoke.Game.Models.Parsing;
-using Karaoke.Utils.Engine;
+using Karaoke.Game.Models.Providers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Karaoke.Game.DI;
 
-public partial class SongInstaller : Node
+public partial class SongInstaller : DIInstaller
 {
     [Export] private SongRunnerController _songRunnerController;
-    private IServiceProvider _services;
-    
-    public override void _Ready()
-    {
-        InstallBindings();
-        this.IterateThroughAllChildrenRecursive(Inject);
-        ChildEnteredTree += OnChildEnteredTree;
-    }
 
-    private void InstallBindings()
+    protected override IServiceProvider InstallBindings(IServiceProvider provider)
     {
-        _services = new ServiceCollection()
+        // Use the default song if the scene is directly loaded
+        var settings = provider == null
+            ? new SongRunnerSettings { SongId = "song" }
+            : provider.GetRequiredService<SongRunnerSettings>();
+        
+        return new ServiceCollection()
+            .AddSingleton(settings)
             .AddSingleton<ILyricsParser, CustomLyricsParser>()
+            .AddSingleton<ILyricsProvider, LocalLyricsProvider>()
             .AddSingleton<ISongRunner>(_songRunnerController)
             .BuildServiceProvider();
-    }
-
-    private void OnChildEnteredTree(Node node)
-    {
-        node.IterateThroughAllChildrenRecursive(Inject);
-    }
-
-    private void Inject(Node node)
-    {
-        if (node is IInjectable injectable)
-        {
-            injectable.InjectDependencies(_services);
-            GD.Print($"Injected {injectable.GetType().Name}!");
-        }
     }
 }

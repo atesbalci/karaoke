@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://860jopkw8mrr"]
+
+[ext_resource type="Theme" uid="uid://d0p2ftjbcavew" path="res://themes/lyrics.tres" id="1_jufi3"]
+
+[node name="SongListing" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_jufi3")
+text = "Song 1"
+alignment = 0

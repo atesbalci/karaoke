@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
 using Karaoke.Game.Models;
-using Karaoke.Game.Models.Parsing;
+using Karaoke.Game.Models.Providers;
 using Karaoke.Game.Views;
 using Karaoke.Utils.Engine;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,9 +23,9 @@ public partial class SongRunnerController : Node, IInjectable, ISongRunner
 
     public void InjectDependencies(IServiceProvider serviceProvider)
     {
-        var lyricsParser = serviceProvider.GetRequiredService<ILyricsParser>();
-        var lyrics = lyricsParser.ParseLyrics(FileAccess.GetFileAsString(_testSongResource));
-        GD.Print(lyrics.Groups.Count);
+        var lyricsProvider = serviceProvider.GetRequiredService<ILyricsProvider>();
+        var settings = serviceProvider.GetRequiredService<SongRunnerSettings>();
+        var lyrics = lyricsProvider.GetLyrics(settings.SongId);
         RunSong(lyrics);
     }
 
