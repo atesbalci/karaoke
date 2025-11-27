@@ -10,6 +10,7 @@ namespace Karaoke.Game.Views;
 public partial class LyricsView : Node, IInjectable
 {
     [Export] private PackedScene _segmentScene;
+    [Export] private LyricsCursorView _cursorView;
     
     private readonly IDictionary<LyricsSegment, LyricsSegmentView> _activeSegments = new Dictionary<LyricsSegment, LyricsSegmentView>();
     
@@ -45,7 +46,7 @@ public partial class LyricsView : Node, IInjectable
             foreach (var segment in group.Lines[i].Segments)
             {
                 var segmentNode = _segmentScene.Instantiate<LyricsSegmentView>();
-                segmentNode.Initialize(segment);
+                segmentNode.Initialize(segment, i);
                 _linesParent.GetChild(i).AddChild(segmentNode);
                 _activeSegments[segment] = segmentNode;
             }
@@ -54,11 +55,15 @@ public partial class LyricsView : Node, IInjectable
 
     public override void _Process(double _)
     {
-        foreach (var activeSegment in _activeSegments)
+        _cursorView.SetVisibility(_activeSegments.Count > 0);
+        foreach (var (segment, view) in _activeSegments)
         {
-            var progress = (_songRunner.Time - activeSegment.Key.StartTime) /
-                           (activeSegment.Key.EndTime - activeSegment.Key.StartTime);
-            activeSegment.Value.UpdateProgress(Mathf.Clamp(progress, 0f, 1f));
+            var progress = segment.GetProgress(_songRunner.Time);
+            view.UpdateProgress(progress);
+            if (progress is < 1f and > 0f)
+            {
+                _cursorView.Update(view, view.LineNumber > 0, progress);
+            }
         }
     }
 

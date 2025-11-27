@@ -20,7 +20,6 @@ public partial class LyricsNextTimerView : Label, IInjectable
 
     public async Task Countdown(float seconds, CancellationToken cancellationToken)
     {
-        GD.Print($"Countdown from {seconds} seconds");
         var secondsDecimal = Mathf.FloorToInt(seconds + 0.001f);
         
         // Trim the subseconds

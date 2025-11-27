@@ -1,11 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4sj6f81xtwnw"]
+[gd_scene load_steps=9 format=3 uid="uid://c4sj6f81xtwnw"]
 
 [ext_resource type="Script" uid="uid://7wvgvbx8lewy" path="res://scripts/Game/Views/LyricsView.cs" id="1_js1lp"]
 [ext_resource type="PackedScene" uid="uid://b1im0jmoxhgli" path="res://scenes/lyric_segment.tscn" id="2_pub24"]
 [ext_resource type="Script" uid="uid://dngt0gdhhm1wg" path="res://scripts/Game/Views/SongTimeView.cs" id="3_dijmr"]
 [ext_resource type="Theme" uid="uid://dvteo85llbb5x" path="res://themes/toggle_button.tres" id="5_748tk"]
+[ext_resource type="Script" uid="uid://dmm4ieg1vsiqo" path="res://scripts/Game/Views/LyricsCursorView.cs" id="5_iwlg5"]
+[ext_resource type="Texture2D" uid="uid://b7fvr6y275mf3" path="res://textures/outlined_circle.png" id="6_iwlg5"]
 
-[node name="SongUI" type="Control"]
+[sub_resource type="Curve2D" id="Curve2D_vq6o5"]
+_data = {
+"points": PackedVector2Array(-51.632713, 54.67704, 50, -50, 0, 0, 0, 0, 0, 0, 100, 0)
+}
+point_count = 2
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_115e6"]
+diffuse_texture = ExtResource("6_iwlg5")
+
+[node name="SongUI" type="Control" node_paths=PackedStringArray("_cursorView")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_js1lp")
 _segmentScene = ExtResource("2_pub24")
+_cursorView = NodePath("LyricsFollower")
 
 [node name="Lines" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -79,3 +91,22 @@ grow_horizontal = 0
 theme = ExtResource("5_748tk")
 toggle_mode = true
 text = "II"
+
+[node name="LyricsFollower" type="Path2D" parent="."]
+curve = SubResource("Curve2D_vq6o5")
+script = ExtResource("5_iwlg5")
+
+[node name="LyricsFollowerPivot" type="PathFollow2D" parent="LyricsFollower"]
+position = Vector2(100, 0)
+progress = 172.01721
+rotates = false
+
+[node name="Cursor" type="TextureRect" parent="LyricsFollower/LyricsFollowerPivot"]
+modulate = Color(1, 1, 0, 1)
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+pivot_offset = Vector2(5, 5)
+texture = SubResource("CanvasTexture_115e6")
+expand_mode = 1

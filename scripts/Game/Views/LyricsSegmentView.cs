@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using Karaoke.Game.Models;
 
@@ -11,10 +10,13 @@ public partial class LyricsSegmentView : Label
     [Export] private ShaderMaterial _colorWaveMaterial;
     
     private ShaderMaterial _material;
+    
+    public int LineNumber { get; private set; }
 
-    public void Initialize(LyricsSegment segment)
+    public void Initialize(LyricsSegment segment, int lineNumber)
     {
         Text = segment.Text;
+        LineNumber = lineNumber;
 
         ShaderMaterial mat;
         switch (segment.Style)

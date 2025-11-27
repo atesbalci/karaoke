@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Karaoke.Game.Models;
 
@@ -36,6 +37,11 @@ public class LyricsSegment
         EndTime = endTime;
         Text = text;
         Style = style;
+    }
+
+    public float GetProgress(float time)
+    {
+        return Math.Clamp((time - StartTime) / (EndTime - StartTime), 0f, 1f);
     }
 }
 
