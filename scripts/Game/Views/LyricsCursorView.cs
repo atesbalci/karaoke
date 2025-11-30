@@ -1,20 +1,16 @@
 ﻿using System;
 using Godot;
-using Karaoke.Game.Models;
-using Karaoke.Utils.Engine;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Karaoke.Game.Views;
 
-public partial class LyricsCursorView : Path2D, IInjectable
+public partial class LyricsCursorView : Path2D
 {
-    private ISongRunner _songRunner;
     private PathFollow2D _follower;
     private Control _cursor;
+    private Label _currentSegment;
 
-    public void InjectDependencies(IServiceProvider serviceProvider)
+    public override void _Ready()
     {
-        _songRunner = serviceProvider.GetRequiredService<ISongRunner>();
         _follower = GetChild<PathFollow2D>(0);
         _cursor = _follower.GetChild<Control>(0);
         _cursor.Visible = false;
@@ -25,14 +21,39 @@ public partial class LyricsCursorView : Path2D, IInjectable
         _cursor.Visible = b;
     }
 
-    public void Update(Control segmentView, bool isBottomLine, float progress)
+    public void Update(Label segmentView, bool isBottomLine, float progress)
     {
-        _cursor.Visible = true;
-        var size = segmentView.Size;
-        var viewPos = segmentView.GlobalPosition;
-        Curve.SetPointPosition(0, viewPos + new Vector2(0f, isBottomLine ? size.Y : 0f));
-        Curve.SetPointPosition(1, viewPos + new Vector2(size.X, isBottomLine ? size.Y : 0f));
-        Curve.SetPointOut(0, new Vector2(size.X * 0.5f, 200f * (isBottomLine ? 1f : -1f)));
+        if (_currentSegment != segmentView)
+        {
+            _currentSegment = segmentView;
+            RefreshPath(isBottomLine);
+        }
+
         _follower.ProgressRatio = progress;
+    }
+
+    private void RefreshPath(bool isBottomLine)
+    {
+        var size = _currentSegment.Size;
+        var viewPos = _currentSegment.GlobalPosition;
+        var text = _currentSegment.Text;
+        var words = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        Curve.PointCount = words.Length + 1;
+        float totalLength = text.Length;
+        float curX = 0f;
+        Curve.SetPointPosition(0, PositionOnLabel(0f, isBottomLine));
+        for (int i = 0; i < words.Length; i++)
+        {
+            var wordSizeX = ((words[i].Length + 1) / totalLength) * size.X;
+            curX += wordSizeX;
+            Curve.SetPointPosition(i + 1, PositionOnLabel(curX, isBottomLine));
+            Curve.SetPointOut(i, new Vector2(wordSizeX * 0.5f, 100f * (isBottomLine ? 1f : -1f)));
+        }
+    }
+
+    private Vector2 PositionOnLabel(float xOffset, bool isBottomLine)
+    {
+        return _currentSegment.GlobalPosition +
+               new Vector2(xOffset, isBottomLine ? _currentSegment.Size.Y : 0f);
     }
 }

@@ -5,4 +5,5 @@
 >>t=22
 
 >>t=25
-<ts=25 te=28>Ut enim ad minim veniam
+<ts=25 te=28>Ut enim ad minim veniam, quis nostrud 
+<ts=28 te=32>exercitation ullamco laboris nisi ut aliquip ex ea commodo <ts=32 te=33 style=Wiggle>consequat.

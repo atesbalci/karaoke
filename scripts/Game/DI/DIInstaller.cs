@@ -10,7 +10,6 @@ public abstract partial class DIInstaller : Node
     
     public override void _Ready()
     {
-        // TODO: Find a more elegant solution for this
         Services = InstallBindings((GetTree().Root.GetChild(0) as DIInstaller)?.Services);
         this.IterateThroughAllChildrenRecursive(Inject);
     }
