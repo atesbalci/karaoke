@@ -1,8 +1,8 @@
 >>t=3.5
-<ts=4 te=7>Loremm ipsum dolor sit amet, <ts=7 te=12 style=Wiggle>consectetur adipiscing elit
-<ts=15 te=20 style=ColorWave>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+<ts=4 te=7>Sed ut perspiciatis unde omnis iste natus error sit
+<ts=7 te=10>voluptatem accusantium doloremque laudantium, totam rem aperiam,
 
->>t=22
+>>t=11
+<ts=11.5 te=15 style=ColorWave>eaque ipsa quae ab illo inventore veritatis
 
->>t=25
-<ts=25 te=28>Ut enim ad minim veniam
+>>t=16

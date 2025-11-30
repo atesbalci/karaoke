@@ -50,6 +50,8 @@ public partial class SongRunnerController : Node, IInjectable, ISongRunner
             _lyricsView.NewLyrics(group);
             isEmpty = group.Lines.Count == 0;
         }
+
+        GetTree().ReloadCurrentScene();
     }
 
     public async Task ScaledDelay(float delay, CancellationToken token)
