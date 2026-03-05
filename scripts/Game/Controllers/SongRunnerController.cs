@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Karaoke.Game.Controllers;
 
-public partial class SongRunnerController : Node, IInjectable, ISongRunner
+public partial class SongRunnerController : AudioStreamPlayer, IInjectable, ISongRunner
 {
     [Export] private LyricsView _lyricsView;
     [Export] private LyricsNextTimerView _lyricsNextTimerView;
@@ -18,6 +18,8 @@ public partial class SongRunnerController : Node, IInjectable, ISongRunner
 
     private int _groupIndex;
     private CancellationTokenSource _cancellationTokenSource;
+    private float _timeScale = 1f;
+    private float _pitch = 1f;
 
     public float Time { get; private set; }
 
@@ -26,13 +28,16 @@ public partial class SongRunnerController : Node, IInjectable, ISongRunner
         var lyricsProvider = serviceProvider.GetRequiredService<ILyricsProvider>();
         var settings = serviceProvider.GetRequiredService<SongRunnerSettings>();
         var lyrics = lyricsProvider.GetLyrics(settings.SongId);
-        RunSong(lyrics);
+        RunSong(lyrics, settings.SongId);
+        RefreshPitch();
     }
 
-    public void RunSong(Lyrics lyrics)
+    public void RunSong(Lyrics lyrics, string songPath)
     {
         _cancellationTokenSource?.Cancel();
         Time = 0f;
+        Stream = GD.Load<AudioStream>("res://sounds/" + songPath + ".mp3");
+        Play();
         _cancellationTokenSource = new CancellationTokenSource();
         _ = RunSongAsync(lyrics, _cancellationTokenSource.Token);
     }
@@ -54,6 +59,16 @@ public partial class SongRunnerController : Node, IInjectable, ISongRunner
         GetTree().ReloadCurrentScene();
     }
 
+    public float Pitch
+    {
+        get => _pitch;
+        set
+        {
+            _pitch = value;
+            RefreshPitch();
+        }
+    }
+
     public async Task ScaledDelay(float delay, CancellationToken token)
     {
         float startTime = Time;
@@ -64,7 +79,22 @@ public partial class SongRunnerController : Node, IInjectable, ISongRunner
     }
 
     public bool IsPaused { get; set; }
-    public float TimeScale { get; set; } = 1f;
+
+    public float TimeScale
+    {
+        get => _timeScale;
+        set
+        {
+            _timeScale = value;
+            RefreshPitch();
+        }
+    }
+
+    private void RefreshPitch()
+    {
+        PitchScale = TimeScale;
+        ((AudioEffectPitchShift)AudioServer.GetBusEffect(0, 0)).PitchScale = (1f / _timeScale) * Pitch;
+    }
 
     public override void _Process(double delta)
     {

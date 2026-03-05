@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b28c4hy45dhcl"]
+[gd_scene load_steps=10 format=3 uid="uid://b28c4hy45dhcl"]
 
 [ext_resource type="Script" uid="uid://dukdlqojrs5fv" path="res://scripts/Game/DI/SongInstaller.cs" id="1_pslvi"]
 [ext_resource type="Script" uid="uid://db7niqelt6a8a" path="res://scripts/Game/Controllers/SongRunnerController.cs" id="2_57y0v"]
@@ -6,6 +6,8 @@
 [ext_resource type="Material" uid="uid://ccv4wuk42n0xd" path="res://materials/background.tres" id="3_vovin"]
 [ext_resource type="Theme" uid="uid://d0p2ftjbcavew" path="res://themes/lyrics.tres" id="4_adosm"]
 [ext_resource type="Script" uid="uid://bnlk84h60yq2x" path="res://scripts/Game/Views/LyricsNextTimerView.cs" id="5_vovin"]
+[ext_resource type="Script" uid="uid://up0ubu5xp82w" path="res://scripts/Game/Views/PitchShifterView.cs" id="7_uvvid"]
+[ext_resource type="AudioBusLayout" uid="uid://8ef3khgna6dq" path="res://custom_audio_bus_layout.tres" id="8_6nypw"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_jqnnl"]
 
@@ -13,7 +15,7 @@
 script = ExtResource("1_pslvi")
 _songRunnerController = NodePath("SongRunner")
 
-[node name="SongRunner" type="Node" parent="." node_paths=PackedStringArray("_lyricsView", "_lyricsNextTimerView")]
+[node name="SongRunner" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("_lyricsView", "_lyricsNextTimerView")]
 script = ExtResource("2_57y0v")
 _lyricsView = NodePath("Lyrics")
 _lyricsNextTimerView = NodePath("Countdown")
@@ -48,3 +50,21 @@ theme_override_font_sizes/font_size = 100
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_vovin")
+
+[node name="HSlider" type="HSlider" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -50.0
+offset_right = 250.0
+grow_horizontal = 2
+grow_vertical = 0
+min_value = 0.01
+max_value = 2.0
+step = 0.01
+value = 1.0
+script = ExtResource("7_uvvid")
+_audioBusLayout = ExtResource("8_6nypw")
